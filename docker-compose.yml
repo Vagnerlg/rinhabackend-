@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes:
+#      - postgresData:/var/lib/postgresql/data
+      - ./initrinha.sql:/docker-entrypoint-initdb.d/script.sql
+    ports:
+      - 5432:5432
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8090:8080
+  app:
+    image: vagnerlg/rinha-de-backend-2024-q1:1.0
+#    build:
+#      context: .
+    ports:
+      - 9999:8080
+volumes:
+  postgresData:
